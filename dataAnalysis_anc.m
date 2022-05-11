@@ -1,6 +1,6 @@
 % Roman Ramirez, rr8rk@virginia.edu
 % BME 3636, Final Research Project
-% dataAnalysis.m
+% dataAnalysis_anc.m
 
 % this is MATLAB code that I used to analyze Cooper Scher's neuron
 % competition network across different simulation neuron counts.
@@ -10,8 +10,8 @@ clear;
 FONT = 'Times New Roman';
 NUM_NEURONS = 1:120;
 BASE_COOPER_DIRECTORY = 'rr8rk_results/';
-BASE_ASCII_DIRECTORY = 'rr8rk_ascii_results/';
-SAVEPATH = 'figures/';
+BASE_ASCII_DIRECTORY = 'rr8rk_ascii_results_anc/';
+SAVEPATH = 'figures_anc/';
 
 addpath('rr8rk_results/');
 addpath('rr8rk_ascii_results/');
@@ -65,7 +65,7 @@ hold on
 plot(NUM_NEURONS, Hx_neurons_ascii);
 plot(NUM_NEURONS, Hz_neurons_ascii);
 legend(["Hx", "Hz"], 'location', 'southeast');
-title('Present Neuron Competition, Entropy vs. Simulation Neuron Count');
+title('Absent Neuron Competition, Entropy vs. Simulation Neuron Count');
 xlabel('Simulation Neuron Count');
 ylabel('Entropy (bits)');
 set(gca, 'FontName', FONT);
@@ -93,7 +93,7 @@ for i=1:size(X, 2)
 
 end
 
-sgtitle('Y, Present Competitive Neuron Model', 'FontSize', 10, 'FontName', FONT, 'FontWeight', 'bold');
+sgtitle('Y, Absent Competitive Neuron Model', 'FontSize', 10, 'FontName', FONT, 'FontWeight', 'bold');
 
 saveas(cooperAsciiZFigure2, [SAVEPATH getVarName(cooperAsciiZFigure2)], 'png');
 
@@ -129,7 +129,7 @@ end
 
 afrtFigure = figure;
 imagesc(averageFiringRateTracker(:,1:100));
-title('Present Neuron Competition, Average Firing Rate vs. Neuron Count');
+title('Absent Neuron Competition, Average Firing Rate vs. Neuron Count');
 xlabel('Timestep');
 ylabel('Simulation Neuron Count');
 colorbar;
