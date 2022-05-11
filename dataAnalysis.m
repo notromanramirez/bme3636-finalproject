@@ -1,21 +1,18 @@
 % Roman Ramirez, rr8rk@virginia.edu
 % BME 3636, Final Research Project
-% dataAnalysis.m
+% data.Analysis.m
 
 % this is MATLAB code that I used to analyze Cooper Scher's neuron
 % competition network across different simulation neuron counts.
 
 clear;
 
-FONT = 'Times New Roman';
 NUM_NEURONS = 1:120;
 BASE_COOPER_DIRECTORY = 'rr8rk_results/';
 BASE_ASCII_DIRECTORY = 'rr8rk_ascii_results/';
-SAVEPATH = 'figures/';
 
 addpath('rr8rk_results/');
-addpath('rr8rk_ascii_results/');
-addpath('rr8rk_ascii_results_anc');
+addpath('rr8rk_ascii_results/')
 addpath('helper/');
 
 data_cooper = struct;
@@ -65,14 +62,13 @@ hold on
 plot(NUM_NEURONS, Hx_neurons_ascii);
 plot(NUM_NEURONS, Hz_neurons_ascii);
 legend(["Hx", "Hz"], 'location', 'southeast');
-title('Present Neuron Competition, Entropy vs. Simulation Neuron Count');
+title('Entropy vs. Simulation Neuron Count');
 xlabel('Simulation Neuron Count');
 ylabel('Entropy (bits)');
-set(gca, 'FontName', FONT);
 grid on
 hold off
 
-saveas(entropyFigure, [SAVEPATH getVarName(entropyFigure)], 'png');
+saveas(entropyFigure, ['figures/' getVarName(entropyFigure)], 'png');
 
 %% Z FIGURE VERSION 2
 
@@ -88,14 +84,14 @@ for i=1:size(X, 2)
 
     subplot(4, 7, i);
     imagesc(reshape(Z(:,i), [12 10]))
-    % title(num2str(letters(i)));
+    title(num2str(letters(i)));
     colormap('hot');
 
 end
 
-sgtitle('Y, Present Competitive Neuron Model', 'FontSize', 10, 'FontName', FONT, 'FontWeight', 'bold');
+sgtitle('X * W from Competitive Neuron Model', 'FontSize', 10, 'FontName', 'Arial', 'FontWeight', 'bold');
 
-saveas(cooperAsciiZFigure2, [SAVEPATH getVarName(cooperAsciiZFigure2)], 'png');
+saveas(cooperAsciiZFigure2, ['figures/' getVarName(cooperAsciiZFigure2)], 'png');
 
 
 disp("Entropy of Z from Competitive Neuron Model: " + num2str(H(Z_act)) + " bits");
@@ -110,14 +106,13 @@ for i=1:size(ascii, 2)
     subplot(4, 7, i);
     data_ascii.(dotIndex).z = data_ascii.(dotIndex).weightVectorTracker(:,:,end) * data_ascii.(dotIndex).Exemplars;
     imagesc(reshape(data_ascii.n120.z(:,i), [12, 10]));
-    % title(num2str(letters(i)));
+    title(num2str(letters(i)));
     colormap('hot');
     
 
 end
 
-set(gca, 'FontName', FONT);
-saveas(cooperAsciiZFigure, [SAVEPATH getVarName(cooperAsciiZFigure)], 'png');
+saveas(cooperAsciiZFigure, ['figures/' getVarName(cooperAsciiZFigure)], 'png');
 
 
 %% AVERAGE FIRING RATE VS. NUMBER OF NEURONS
@@ -129,13 +124,13 @@ end
 
 afrtFigure = figure;
 imagesc(averageFiringRateTracker(:,1:100));
-title('Present Neuron Competition, Average Firing Rate vs. Neuron Count');
+title('Average Firing Rate vs. Simulation Neuron Count');
 xlabel('Timestep');
 ylabel('Simulation Neuron Count');
 colorbar;
 colormap('hot');
-set(gca, 'FontName', FONT);
-saveas(afrtFigure, [SAVEPATH getVarName(afrtFigure)], 'png');
+
+saveas(afrtFigure, ['figures/' getVarName(afrtFigure)], 'png');
 
 %% NEURON EXCITATION VS. NUMBER OF NEURONS
 
@@ -159,52 +154,28 @@ imagesc(neuronExcitation);
 title('Neuron Excitation vs. Simulation Neuron Count');
 xlabel('Excitation of Neuron_i');
 ylabel('Simulation Neuron Count');
-set(gca, 'FontName', FONT);
 colorbar;
 colormap('hot');
 
-saveas(neuronExcitationFigure, [SAVEPATH getVarName(neuronExcitationFigure)], 'png');
+saveas(neuronExcitationFigure, ['figures/' getVarName(neuronExcitationFigure)], 'png');
 
 neuronAverageExcitationFigure = figure;
 imagesc(averageExcitation);
 title('Average Neuron Excitation vs. Simulation Neuron Count');
 xlabel('Excitation of Neuron_i');
 ylabel('Simulation Neuron Count');
-set(gca, 'FontName', FONT);
 colorbar;
 colormap('hot');
 
-saveas(neuronAverageExcitationFigure, [SAVEPATH getVarName(neuronAverageExcitationFigure)], 'png');
+saveas(neuronAverageExcitationFigure, ['figures/' getVarName(neuronAverageExcitationFigure)], 'png');
 
 neuronAverageLogExcitationFigure = figure;
 imagesc(averageLogExcitation);
 title('Average Log Neuron Excitation vs. Simulation Neuron Count');
 xlabel('Excitation of Neuron_i');
 ylabel('Simulation Neuron Count');
-set(gca, 'FontName', FONT);
 colorbar;
 colormap('hot');
 
-saveas(neuronAverageLogExcitationFigure, [SAVEPATH getVarName(neuronAverageLogExcitationFigure)], 'png');
+saveas(neuronAverageLogExcitationFigure, ['figures/' getVarName(neuronAverageLogExcitationFigure)], 'png');
 
-%% ENERGY COST
-
-energy_Hz_ascii = zeros(1, length(NUM_NEURONS));
-
-for i=NUM_NEURONS
-    dotIndex = "n" + num2str(i);
-    energy_Hz_ascii(i) = data_ascii.(dotIndex).Hz ./ NUM_NEURONS(i);
-    data_ascii.(dotIndex).energy_Hz_ascii = data_ascii.(dotIndex).Hz ./ NUM_NEURONS(i);
-end
-
-energyFigure = figure;
-hold on
-plot(NUM_NEURONS, energy_Hz_ascii);
-title('Absent Neuron Competition, Energy Cost vs. Simulation Neuron Count');
-xlabel('Simulation Neuron Count');
-ylabel('Entropy per Cost (bits/neurons)');
-set(gca, 'FontName', FONT);
-grid on
-hold off
-
-saveas(energyFigure, [SAVEPATH getVarName(energyFigure)], 'png');

@@ -7,6 +7,7 @@
 % neuron counts.
 
 %% ON COOPER'S EXEMPLAR DATASET
+
 addpath('cooper_scher\');
 BASE_DIRECTORY = 'rr8rk_results/'
 
@@ -16,18 +17,9 @@ for i_neurons = 1:120
 
 end
 
-%% ON THE ASCII DATASET, NEURON COMPETITION
+%% ON THE ASCII DATASET
 
-addpath('cooper_scher\');
 loading = load('helper\lowercase.mat');
 for i_neurons = 1:120
     OutputCreation('rr8rk_ascii_results', i_neurons, loading.ascii);
-end
-
-%% ON THE ASCII DATASET, ABSENT NEURON COMPETITION
-
-addpath('cooper_scher\');
-loading = load('helper/lowercase.mat');
-for i_neurons = 1:120
-    OutputCreationANC('rr8rk_ascii_results_anc', i_neurons, loading.ascii);
 end
